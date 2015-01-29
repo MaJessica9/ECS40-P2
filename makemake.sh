@@ -36,8 +36,12 @@ else 									          	    # initialize Makefile
     echo -e -n '\tg++ -ansi -Wall -g -c' "$f">>Makefile
     echo>>Makefile 
     echo>>Makefile
-    done
+  done
   rm out.txt
+
+  # Last Line
+  echo 'clean :'>>Makefile
+  echo -n -e '\trm -f'" $1">>Makefile 
 fi
 
 
