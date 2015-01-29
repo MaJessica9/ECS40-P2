@@ -4,13 +4,14 @@ if [[ "$#" -eq 0 ]]
 then
   echo Executable name required.
   echo usage: makemake.sh executable_name
-else 									          	    # initialize Makefile
+else                                  # initialize Makefile
   # Line 1
   echo -n "$1 :">Makefile
   for f in *.cpp ; do                 # finds all .cpp files
     f2=${f%.*}.o                      # changes them to .o strings
     echo -n " $f2">>Makefile          # appends the new string to the Makefile
   done # for
+  echo -n '  '>>Makefile
   echo>>Makefile                      # adds a new line
 
   # Line 2
@@ -19,6 +20,7 @@ else 									          	    # initialize Makefile
     f2=${f%.*}.o 
     echo -n " $f2">>Makefile          # appends the new string to the Makefile
   done # for
+  echo -n '  '>>Makefile
   echo>>Makefile 
   echo>>Makefile
 
@@ -26,11 +28,15 @@ else 									          	    # initialize Makefile
   for f in *.cpp ; do                 # for every .cpp file
     f2=${f%.*}.o
     echo -n "$f2 : ">>Makefile 
-    echo -n " $f">>Makefile
+    echo -n "$f ">>Makefile
     awk '/"*.h"/ {print $2}' $f > out.txt # search for .h
-    sed 's/"//g' out.txt > out.txt             # remove the "" in the line
-    tr '\n' ' ' < out.txt > out.txt
-    cat out.txt>>Makefile
+#    cat out.txt
+    sed 's/"//g' out.txt > out1.txt             # remove the "" in the line
+#    cat out1.txt
+#    echo yay
+    tr '\n' ' ' < 1out.txt > out2.txt
+#    cat out2.txt
+    cat out2.txt>>Makefile
     echo>>Makefile  
   
     # Line 4+
@@ -39,14 +45,17 @@ else 									          	    # initialize Makefile
     echo>>Makefile
   done
   rm out.txt
+  rm out1.txt
+  rm out2.txt
 
   # Last Line
-  echo 'clean :'>>Makefile
+  echo 'clean : '>>Makefile
   echo -n -e '\trm -f'" $1">>Makefile 
   for f in *.cpp ; do                 # for every .cpp file
     f2=${f%.*}.o 
-    echo -n " $f2">>Makefile          # appends the new string to the Makefile
+    echo -n " $f2 ">>Makefile          # appends the new string to the Makefile
   done # for
+  echo -n '  '>>Makefile
 fi
 
 
