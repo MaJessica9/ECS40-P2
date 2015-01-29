@@ -25,11 +25,12 @@ else 									          	    # initialize Makefile
   # Line 3+
   for f in *.cpp ; do                 # for every .cpp file
     f2=${f%.*}.o
-    echo -n "$f2 :">>Makefile 
+    echo -n "$f2 : ">>Makefile 
     echo -n " $f">>Makefile
     awk '/"*.h"/ {print $2}' $f > out.txt # search for .h
-    g=$(sed 's/"//g' out.txt)              # remove the "" in the line
-    echo -n " $g">>Makefile
+    sed 's/"//g' out.txt > out.txt             # remove the "" in the line
+    tr '\n' ' ' < out.txt > out.txt
+    cat out.txt>>Makefile
     echo>>Makefile  
   
     # Line 4+
