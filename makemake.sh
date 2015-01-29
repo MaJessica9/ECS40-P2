@@ -42,6 +42,10 @@ else 									          	    # initialize Makefile
   # Last Line
   echo 'clean :'>>Makefile
   echo -n -e '\trm -f'" $1">>Makefile 
+  for f in *.cpp ; do                 # for every .cpp file
+    f2=${f%.*}.o 
+    echo -n " $f2">>Makefile          # appends the new string to the Makefile
+  done # for
 fi
 
 
